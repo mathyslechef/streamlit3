@@ -71,19 +71,3 @@ elif st.session_state["authentication_status"] is None:
 from streamlit_option_menu import option_menu
 
 
-# Création du menu qui va afficher les choix qui se trouvent dans la variable options
-
-selection = option_menu(
-
-            menu_title=None,
-
-            options = ["Accueil", "Photos"]
-
-        )
-if selection == "Accueil":
-
-    st.write("Bienvenue sur la page d'accueil !")
-
-elif selection == "Photos":
-
-    st.write("Bienvenue sur mon album photo")
