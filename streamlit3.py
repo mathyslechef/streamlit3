@@ -1,7 +1,5 @@
 import streamlit as st
 
-from streamlit_authenticator import Authenticate
-
 
 # Nos données utilisateurs doivent respecter ce format
 
