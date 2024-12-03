@@ -26,12 +26,16 @@ authenticator = Authenticate(
 )
 
 # Connexion et gestion du formulaire d'authentification
-st.title("Bienvenue à l'application de : connectez-vous pour accéder à l'album")
+st.title("Bienvenue à l'application : connectez-vous pour accéder à l'album")
 
-# Formulaire d'authentification
-if authenticator.authenticate():
+# Utiliser authenticator.login() pour afficher le formulaire
+auth_status, username, user_role = authenticator.login("Login", "main")
+
+# Vérification de l'authentification
+if auth_status:
     st.session_state["authentication_status"] = True
-    st.session_state["username"] = authenticator.username
+    st.session_state["username"] = username
+    st.session_state["user_role"] = user_role
 else:
     st.session_state["authentication_status"] = False
 
