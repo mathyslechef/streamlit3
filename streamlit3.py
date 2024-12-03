@@ -26,7 +26,7 @@ authenticator = Authenticate(
 )
 
 # Connexion et gestion du formulaire d'authentification
-st.title("Bienvenue à l'application de : connectez-vous pour accéder à l'album")
+st.title("Application de Connexion et d'Album Photo")
 
 # Formulaire d'authentification
 if authenticator.authenticate():
