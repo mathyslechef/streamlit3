@@ -1,5 +1,3 @@
-import streamlit as st
-from streamlit_authenticator import Authenticate
 
 # Données des comptes utilisateurs
 lesDonneesDesComptes = {
