@@ -2,26 +2,18 @@ import streamlit as st
 from streamlit_authenticator import Authenticate
 from streamlit_option_menu import option_menu
 
+df = pd.read_csv('users.csv')
+
 # Données des comptes utilisateurs
+
 lesDonneesDesComptes = {
-    'usernames': {
-        'utilisateur': {
-            'name': 'utilisateur',
-            'password': 'utilisateurMDP',
-            'email': 'utilisateur@gmail.com',
-            'failed_login_attempts': 0,
-            'logged_in': False,
-            'role': 'utilisateur'
-        },
-        'root': {
-            'name': 'root',
-            'password': 'rootMDP',
-            'email': 'admin@gmail.com',
-            'failed_login_attempts': 0,
-            'logged_in': False,
-            'role': 'administrateur'
-        }
-    }
+    'usernames': {row['name']: {
+        'name': row['name'],
+        'password': row['password'],
+        'email': row['email'],
+        'failed_login_attempts': row['failed_login_attempts'],
+        'logged_in': row['logged_in'],
+        'role': row['role']} for _, row in df.iterrows()}
 }
 
 # Création de l'instance d'authentification
@@ -37,8 +29,22 @@ authenticator.login()
 
 # Vérification du statut de l'authentification
 def accueil():
-    st.title("Bienvenu sur le contenu réservé aux utilisateurs connectés")
+    st.title("Bienvenue sur le contenu réservé aux utilisateurs connectés")
     # Vous pouvez ajouter ici du contenu réservé aux utilisateurs authentifiés
+    # Disposition des images en 3 colonnes
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.header("Un chat")
+        st.image("https://static.streamlit.io/examples/cat.jpg")
+
+    with col2:
+        st.header("Un chien")
+        st.image("https://static.streamlit.io/examples/dog.jpg")
+
+    with col3:
+        st.header("Un hibou")
+        st.image("https://static.streamlit.io/examples/owl.jpg")
 
 # Gestion de l'authentification
 if st.session_state["authentication_status"]:
