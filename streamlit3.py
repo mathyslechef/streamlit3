@@ -1,88 +1,108 @@
 import streamlit as st
-import pandas as pd
-from streamlit_authenticator import Authenticate
+
+# Importation du module
+
 from streamlit_option_menu import option_menu
 
-# Charger les données des utilisateurs depuis un fichier CSV
-df = pd.read_csv('users.csv')
 
-# Préparer les données des comptes pour l'authentification
-lesDonneesDesComptes = {
-    'usernames': {row['name']: {
-        'name': row['name'],
-        'password': row['password'],
-        'email': row['email'],
-        'failed_login_attempts': row['failed_login_attempts'],
-        'logged_in': row['logged_in'],
-        'role': row['role']} for _, row in df.iterrows()}
-}
+# Création du menu qui va afficher les choix qui se trouvent dans la variable options
 
-# Créer une instance d'authentification
-authenticator = Authenticate(
-    lesDonneesDesComptes,  # Données des comptes
-    "cookie_name",         # Nom du cookie
-    "cookie_key",          # Clé du cookie
-    30                     # Expiration du cookie en jours
-)
+selection = option_menu(
 
-# Connexion et gestion du formulaire d'authentification
-st.title("Bienvenue à l'application : connectez-vous pour accéder à l'album")
+            menu_title=None,
 
-# Utiliser authenticator.login() pour afficher le formulaire dans la sidebar ou dans le main
-with st.sidebar:
-    # Le formulaire de connexion s'affiche dans la sidebar
-    auth_status, username, user_role = authenticator.login("Login", "sidebar")
+            options = ["Accueil", "Photos"]
 
-# Vérification de l'authentification
-if auth_status:
-    st.session_state["authentication_status"] = True
-    st.session_state["username"] = username
-    st.session_state["user_role"] = user_role
-    st.success(f"Bienvenue {username} !")
-
-else:
-    st.session_state["authentication_status"] = False
-
-# Vérification de l'authentification
-if st.session_state["authentication_status"]:
-    # Afficher un message de bienvenue dans la sidebar
-    with st.sidebar:
-        st.write(f"Bienvenue, {st.session_state['username']}!")
-
-        # Menu de navigation dans la sidebar
-        selection = option_menu(
-            menu_title="Menu",  # Titre du menu
-            options=["Accueil", "Photos", "Dashboard"],  # Options du menu
-            icons=["house", "image", "bar-chart-line"],  # Icônes associées
-            default_index=0  # Page par défaut
         )
+import streamlit as st
 
-        # Affichage du contenu en fonction de l'option sélectionnée
-        if selection == "Accueil":
-            st.write("Bienvenue sur la page d'accueil!")
-        elif selection == "Photos":
-            # Disposition des images en 3 colonnes
-            col1, col2, col3 = st.columns(3)
+from streamlit_authenticator import Authenticate
 
-            with col1:
-                st.header("Un chat")
-                st.image("https://static.streamlit.io/examples/cat.jpg")
 
-            with col2:
-                st.header("Un chien")
-                st.image("https://static.streamlit.io/examples/dog.jpg")
+# Nos données utilisateurs doivent respecter ce format
 
-            with col3:
-                st.header("Un hibou")
-                st.image("https://static.streamlit.io/examples/owl.jpg")
 
-        elif selection == "Dashboard":
-            st.write("Bienvenue sur le tableau de bord!")
+lesDonneesDesComptes = {'usernames': {'utilisateur': {'name': 'utilisateur',
 
-        # Bouton de déconnexion
-        authenticator.logout("Déconnexion")
+   'password': 'utilisateurMDP',
+
+   'email': 'utilisateur@gmail.com',
+
+   'failed_login_attemps': 0, # Sera géré automatiquement
+
+   'logged_in': False, # Sera géré automatiquement
+
+   'role': 'utilisateur'},
+
+  'root': {'name': 'root',
+
+   'password': 'rootMDP',
+
+   'email': 'admin@gmail.com',
+
+   'failed_login_attemps': 0, # Sera géré automatiquement
+
+   'logged_in': False, # Sera géré automatiquement
+
+   'role': 'administrateur'}}}
+
+
+authenticator = Authenticate(
+
+    lesDonneesDesComptes, # Les données des comptes
+
+    "cookie name", # Le nom du cookie, un str quelconque
+
+    "cookie key", # La clé du cookie, un str quelconque
+
+    30, # Le nombre de jours avant que le cookie expire 
+
+)
+def accueil():
+
+      st.title("Bienvenu sur le contenu réservé aux utilisateurs connectés")
+
+
+
+if st.session_state["authentication_status"]:
+
+  accueil()
+
+  # Le bouton de déconnexion
+
+  authenticator.logout("Déconnexion")
+
 
 elif st.session_state["authentication_status"] is False:
-    st.error("Nom d'utilisateur ou mot de passe incorrect.")
+
+    st.error("L'username ou le password est/sont incorrect")
+
 elif st.session_state["authentication_status"] is None:
-    st.warning('Veuillez remplir les champs nom d\'utilisateur et mot de passe.')
+
+    st.warning('Les champs username et mot de passe doivent être remplie')
+
+import streamlit as st
+
+# Importation du module
+
+from streamlit_option_menu import option_menu
+
+
+# Création du menu qui va afficher les choix qui se trouvent dans la variable options
+
+selection = option_menu(
+
+            menu_title=None,
+
+            options = ["Accueil", "Photos"]
+
+        )
+if selection == "Accueil":
+
+    st.write("Bienvenue sur la page d'accueil !")
+
+elif selection == "Photos":
+
+    st.write("Bienvenue sur mon album photo")
+
+# ... et ainsi de suite pour les autres pages
