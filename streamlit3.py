@@ -1,3 +1,5 @@
+import streamlit as st
+from streamlit_authenticator import Authenticate
 
 # Données des comptes utilisateurs
 lesDonneesDesComptes = {
@@ -46,27 +48,3 @@ elif st.session_state["authentication_status"] is False:
     st.error("Nom d'utilisateur ou mot de passe incorrect.")
 elif st.session_state["authentication_status"] is None:
     st.warning('Veuillez remplir les champs nom d\'utilisateur et mot de passe.')
-
-# Vérification du rôle et affichage en fonction
-if st.session_state["authentication_status"]:
-    user_role = st.session_state["user_role"]
-    
-    if user_role == "administrateur":
-        st.write("Bienvenue, Administrateur!")
-        # Contenu réservé aux administrateurs
-        if selection == "Dashboard":
-            st.write("Tableau de bord Administrateur")
-    else:
-        st.write("Bienvenue, Utilisateur!")
-        # Contenu réservé aux utilisateurs
-        if selection == "Photos":
-            st.write("Album photo de l'utilisateur")
-else:
-    st.warning("Veuillez vous connecter pour accéder à ces fonctionnalités.")
-
-# Exemple de protection contre les attaques par force brute
-MAX_ATTEMPTS = 3  # Nombre maximal de tentatives
-
-if authenticator.failed_login_attempts >= MAX_ATTEMPTS:
-    st.error("Vous avez atteint le nombre maximal de tentatives. Veuillez réessayer plus tard.")
-    # Bloquer l'accès pendant un certain temps ou rediriger vers une page de réinitialisation
