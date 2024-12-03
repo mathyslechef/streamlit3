@@ -28,8 +28,9 @@ authenticator = Authenticate(
 # Connexion et gestion du formulaire d'authentification
 st.title("Bienvenue à l'application : connectez-vous pour accéder à l'album")
 
-# Utiliser authenticator.login() pour afficher le formulaire
-auth_status, username, user_role = authenticator.login("Login", "main")
+# Utiliser authenticator.login() pour afficher le formulaire dans la sidebar ou dans le main
+with st.sidebar:
+    auth_status, username, user_role = authenticator.login("Login", "sidebar")
 
 # Vérification de l'authentification
 if auth_status:
