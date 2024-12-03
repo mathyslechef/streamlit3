@@ -37,17 +37,21 @@ else:
 
 # Vérification de l'authentification
 if st.session_state["authentication_status"]:
-    # Afficher un message de bienvenue dans la sidebar
-    with st.sidebar:
-        st.write(f"Bienvenue, {st.session_state['username']}!")
-
-        # Menu de navigation dans la sidebar
-        selection = option_menu(
-            menu_title="Menu",  # Titre du menu
-            options=["Accueil", "Photos", "Dashboard"],  # Options du menu
-            icons=["house", "image", "bar-chart-line"],  # Icônes associées
-            default_index=0  # Page par défaut
-        )
+    # Vérification du rôle et affichage du contenu en fonction du rôle
+    user_role = df.loc[df['name'] == st.session_state['username'], 'role'].values[0]
+    
+    if user_role == 'administrateur':
+        st.write("Bienvenue, Administrateur! Vous avez accès à des fonctionnalités avancées.")
+    else:
+        st.write("Bienvenue, Utilisateur! Vous avez un accès limité.")
+    
+    # Menu de navigation
+    selection = option_menu(
+        menu_title="Menu",  # Titre du menu
+        options=["Accueil", "Photos", "Dashboard"],  # Options du menu
+        icons=["house", "image", "bar-chart-line"],  # Icônes associées
+        default_index=0  # Page par défaut
+    )
 
         # Affichage du contenu en fonction de l'option sélectionnée
         if selection == "Accueil":
