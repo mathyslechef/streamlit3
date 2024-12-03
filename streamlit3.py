@@ -65,11 +65,7 @@ if st.session_state["authentication_status"]:
             st.write("Album photo de l'utilisateur")
 else:
     st.warning("Veuillez vous connecter pour accéder à ces fonctionnalités.")
-Étape 5: Protection contre les attaques par force brute
-Pour éviter les attaques par force brute, vous pouvez mettre en place des mesures de sécurité pour limiter les tentatives de connexion. Par exemple, vous pouvez utiliser la propriété failed_login_attempts dans les données des utilisateurs pour suivre le nombre de tentatives échouées.
 
-python
-Copier le code
 # Exemple de protection contre les attaques par force brute
 MAX_ATTEMPTS = 3  # Nombre maximal de tentatives
 
