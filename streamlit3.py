@@ -20,9 +20,9 @@ lesDonneesDesComptes = {
 # Créer une instance d'authentification
 authenticator = Authenticate(
     lesDonneesDesComptes,  # Données des comptes
-    "name",         # Nom du cookie
-    "password",          # Clé du cookie
-     10                 # Expiration du cookie en jours
+    "cookie_name",         # Nom du cookie
+    "cookie_key",          # Clé du cookie
+    30                     # Expiration du cookie en jours
 )
 
 # Connexion et gestion du formulaire d'authentification
@@ -30,6 +30,7 @@ st.title("Bienvenue à l'application : connectez-vous pour accéder à l'album")
 
 # Utiliser authenticator.login() pour afficher le formulaire dans la sidebar ou dans le main
 with st.sidebar:
+    # Le formulaire de connexion s'affiche dans la sidebar
     auth_status, username, user_role = authenticator.login("Login", "sidebar")
 
 # Vérification de l'authentification
@@ -37,6 +38,8 @@ if auth_status:
     st.session_state["authentication_status"] = True
     st.session_state["username"] = username
     st.session_state["user_role"] = user_role
+    st.success(f"Bienvenue {username} !")
+
 else:
     st.session_state["authentication_status"] = False
 
