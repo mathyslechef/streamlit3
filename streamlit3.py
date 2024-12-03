@@ -20,9 +20,9 @@ lesDonneesDesComptes = {
 # Créer une instance d'authentification
 authenticator = Authenticate(
     lesDonneesDesComptes,  # Données des comptes
-    "cookie_name",         # Nom du cookie
-    "cookie_key",          # Clé du cookie
-    30                     # Expiration du cookie en jours
+    "name",         # Nom du cookie
+    "password",          # Clé du cookie
+     10                 # Expiration du cookie en jours
 )
 
 # Connexion et gestion du formulaire d'authentification
